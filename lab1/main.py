@@ -31,5 +31,10 @@ def main():
         print(f"  {fmt}: {path}")
 
 
+
+# Пример использования:
+# show_table(df, n=10)
+
+
 if __name__ == "__main__":
     main()
