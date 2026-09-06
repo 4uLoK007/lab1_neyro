@@ -62,7 +62,7 @@ def main():
     print("\n" + "=" * 60)
     print("РАЗДЕЛ 2. Предобработка")
     print("=" * 60)
-    
+
     # --- Задание 6: извлечение столбцов по варианту ---
     print(f"\n[6] Извлечение столбцов: {VARIANT_COLS}")
     df_subset = extract_columns(df, VARIANT_COLS)
@@ -224,6 +224,50 @@ def main():
     print("\n" + "=" * 60)
     print("ЗАДАНИЯ 14-37 ВЫПОЛНЕНЫ. Графики сохранены в output/")
     print("=" * 60)
+
+        # ============================================================
+    # ЗАДАНИЯ 38-49
+    # ============================================================
+    from src import tensors as tn
+    from src import matrix_ops as mo2
+
+    # --- 38-45: тензоры ---
+    tn.run_all(data)
+
+    # --- 46: разреженная матрица ---
+    print("\n[46] Разреженная матрица SciPy:")
+    S, nnz = mo2.sparse_matrix_demo(10_000, 10_000, density=1e-5)
+    print(f"  shape = {S.shape}, nnz = {nnz}, "
+          f"плотность = {nnz / (S.shape[0] * S.shape[1]):.2e}")
+
+    # --- 47: обратная матрица ---
+    print("\n[47] Обратная матрица:")
+    inv_info = mo2.inverse_matrix_demo(size=100)
+    print(f"  det = {inv_info['det']:.4e}")
+    print(f"  inv_ok = {inv_info['inv_ok']}, max_error = {inv_info['max_error']}")
+
+    # --- 48: достройка массива до F ---
+    print("\n[48] Достройка массива до F:")
+    F = mo2.build_F(data)
+    print(f"  F.shape = {F.shape}")
+
+    # --- 49: пайплайн sklearn (PCA) ---
+    print("\n[49] Пайплайн sklearn (PCA):")
+    mo2.sklearn_pca_pipeline(F)
+    mo2.plot_pca_cumulative(F)
+
+    # ============================================================
+    # ЗАДАНИЕ 50
+    # ============================================================
+    import os
+    from src import image_proc as ip
+
+    image_path = "data/image.png"
+    if os.path.exists(image_path):
+        ip.run_task50(image_path)
+    else:
+        print(f"\n[50] Файл {image_path} не найден — пропускаю Задание 50.")
+        print("     Положи любое цветное изображение в data/image.png и перезапусти.")
 
 
 if __name__ == "__main__":
